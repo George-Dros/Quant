@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 from scipy.optimize import minimize
-import ipywidgets as widgets
 
 
 def annualize_rets(r, periods_per_year):
