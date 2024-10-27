@@ -749,3 +749,16 @@ def terminal_stats(rets, floor = 0.8, cap=np.inf, name="Stats"):
         "e_surplus": e_surplus
     }, orient="index", columns=[name])
     return sum_stats
+
+
+def glidepath_allocator(r1,r2,  start_glide=1, end_glide=0):
+    """
+    Simulates a Target-Data-Fund style gradual move from r1 to r2
+    """
+    n_points = r1.shape[0]
+    n_col = r1.shape[1]
+    path = pd.Series(data=np.linspace(start_glide, end_glide, num=n_points))
+    paths = pd.concat([path]*n_col,  axis=1)
+    paths.index = r1.index
+    paths.columns = r1.columns
+    return paths
