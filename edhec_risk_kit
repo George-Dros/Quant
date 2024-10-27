@@ -724,3 +724,28 @@ def terminal_values(rets):
     Returns the final values of a dollar at the end of the return period for each scenario
     """
     return (rets+1).prod()
+
+
+def terminal_stats(rets, floor = 0.8, cap=np.inf, name="Stats"):
+    """
+    Produce Summary Statistics on the terminal values per invested dollar
+    across a range of N scenarios
+    rets is a T x N DataFrame of returns, where T is the time-step (we assume rets is sorted by time)
+    Returns a 1 column DataFrame of Summary Stats indexed by the stat name 
+    """
+    terminal_wealth = (rets+1).prod()
+    breach = terminal_wealth < floor
+    reach = terminal_wealth >= cap
+    p_breach = breach.mean() if breach.sum() > 0 else np.nan
+    p_reach = breach.mean() if reach.sum() > 0 else np.nan
+    e_short = (floor-terminal_wealth[breach]).mean() if breach.sum() > 0 else np.nan
+    e_surplus = (cap-terminal_wealth[reach]).mean() if reach.sum() > 0 else np.nan
+    sum_stats = pd.DataFrame.from_dict({
+        "mean": terminal_wealth.mean(),
+        "std" : terminal_wealth.std(),
+        "p_breach": p_breach,
+        "e_short":e_short,
+        "p_reach": p_reach,
+        "e_surplus": e_surplus
+    }, orient="index", columns=[name])
+    return sum_stats
