@@ -816,3 +816,9 @@ def drawdown_allocator(psp_r, ghp_r, maxdd, m=3):
         peak_value = np.maximum(peak_value, account_value)
         w_history.iloc[step] = psp_w
     return w_history
+
+def compound(r):
+    """
+    returns the result of compounding the set of returns in r
+    """
+    return np.expm1(np.log1p(r).sum())
