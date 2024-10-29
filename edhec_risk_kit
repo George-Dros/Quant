@@ -1109,6 +1109,12 @@ def w_msr(sigma, mu, scale=True):
         w = w/sum(w) # fix: this assumes all w is +ve
     return w
 
+def w_star(delta, sigma, mu):
+    return (inverse(sigma).dot(mu))/delta
+
+wstar = w_star(delta=2.5, sigma=bl_sigma, mu=bl_mu)
+# display w*
+(wstar*100).round(1)
 
 
 
