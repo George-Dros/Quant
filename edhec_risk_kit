@@ -1089,3 +1089,27 @@ def bl(w_prior, sigma_prior, p, q,
     sigma_bl = sigma_prior + sigma_prior_scaled - sigma_prior_scaled.dot(p.T).dot(inv(p.dot(sigma_prior_scaled).dot(p.T) + omega)).dot(p).dot(sigma_prior_scaled)
     return (mu_bl, sigma_bl)
 
+def inverse(d):
+    """
+    Invert the dataframe by inverting the underlying matrix
+    """
+    return pd.DataFrame(inv(d.values), index=d.columns, columns=d.index)
+
+def w_msr(sigma, mu, scale=True):
+    """
+    Optimal (Tangent/Max Sharpe Ratio) Portfolio weights
+    by using the Markowitz Optimization Procedure
+    Mu is the vector of Excess expected Returns
+    Sigma must be an N x N matrix as a DataFrame and Mu a column vector as a Series
+    This implements page 188 Equation 5.2.28 of
+    "The econometrics of financial markets" Campbell, Lo and Mackinlay.
+    """
+    w = inverse(sigma).dot(mu)
+    if scale:
+        w = w/sum(w) # fix: this assumes all w is +ve
+    return w
+
+
+
+
+
