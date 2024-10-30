@@ -1121,7 +1121,7 @@ def risk_contribution(w,cov):
     """
     Compute the contributions to risk of the constituents of a portfolio, given a set of portfolio weights and a covariance matrix
     """
-    total_portfolio_var = erk.portfolio_vol(w,cov)**2
+    total_portfolio_var = portfolio_vol(w,cov)**2
     # Marginal contribution of each constituent
     marginal_contrib = cov@w
     risk_contrib = np.multiply(marginal_contrib,w.T)/total_portfolio_var
