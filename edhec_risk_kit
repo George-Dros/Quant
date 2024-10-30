@@ -1117,5 +1117,15 @@ wstar = w_star(delta=2.5, sigma=bl_sigma, mu=bl_mu)
 (wstar*100).round(1)
 
 
+def risk_contribution(w,cov):
+    """
+    Compute the contributions to risk of the constituents of a portfolio, given a set of portfolio weights and a covariance matrix
+    """
+    total_portfolio_var = erk.portfolio_vol(w,cov)**2
+    # Marginal contribution of each constituent
+    marginal_contrib = cov@w
+    risk_contrib = np.multiply(marginal_contrib,w.T)/total_portfolio_var
+    return risk_contrib
+
 
 
