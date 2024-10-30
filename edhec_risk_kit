@@ -1166,3 +1166,9 @@ def equal_risk_contributions(cov):
     return target_risk_contributions(target_risk=np.repeat(1/n,n), cov=cov)
 
 
+def weight_erc(r, cov_estimator=erk.sample_cov, **kwargs):
+    """
+    Produces the weights of the ERC portfolio given a covariance matrix of the returns 
+    """
+    est_cov = cov_estimator(r, **kwargs)
+    return equal_risk_contributions(est_cov)
