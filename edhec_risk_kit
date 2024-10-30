@@ -563,11 +563,11 @@ def show_funding_ratio(assets, r):
     fr = funding_ratio(assets, liabilities, r)
     print(f'{fr*100:0.2f}')
 
-controls = widgets.interactive(show_funding_ratio,
+    controls = widgets.interactive(show_funding_ratio,
                               assets = widgets.IntSlider(min=1, max=10, step=1, value=5),
                               r = (0,0.20, 0.01)
                               )
-display(controls)
+    display(controls)
 
 
 def inst_to_ann(r):
@@ -1112,9 +1112,9 @@ def w_msr(sigma, mu, scale=True):
 def w_star(delta, sigma, mu):
     return (inverse(sigma).dot(mu))/delta
 
-wstar = w_star(delta=2.5, sigma=bl_sigma, mu=bl_mu)
-# display w*
-(wstar*100).round(1)
+    wstar = w_star(delta=2.5, sigma=bl_sigma, mu=bl_mu)
+    # display w*
+    (wstar*100).round(1)
 
 
 def risk_contribution(w,cov):
@@ -1166,7 +1166,7 @@ def equal_risk_contributions(cov):
     return target_risk_contributions(target_risk=np.repeat(1/n,n), cov=cov)
 
 
-def weight_erc(r, cov_estimator=erk.sample_cov, **kwargs):
+def weight_erc(r, cov_estimator=sample_cov, **kwargs):
     """
     Produces the weights of the ERC portfolio given a covariance matrix of the returns 
     """
